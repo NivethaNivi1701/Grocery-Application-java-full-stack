@@ -1,0 +1,50 @@
+import { Component, OnInit } from '@angular/core';
+declare var Razorpay: any;23
+@Component({
+  selector: 'app-payment',
+  templateUrl: './payment.component.html',
+  styleUrls: ['./payment.component.css']
+})
+export class PaymentComponent  {
+
+ PayNow(){
+  const amountInput = document.getElementById("amountInput") as HTMLInputElement;
+    const userAmount = amountInput.valueAsNumber;
+    const checkoutAmount = userAmount * 100;
+    const RozarpayOptions = {
+      
+      description: 'Sample Razorpay demo',
+      currency: 'INR',
+      amount: checkoutAmount,
+      name: 'Razorpay',
+      key: 'rzp_test_uigoL9U2ODn8iQ',
+      image: 'data:image/png;base64,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',
+      prefill: {
+        name: 'Nivetha',
+        email: 'nivethaumapathy01@gmail.com',
+        phone: '9898989898'
+      },
+      theme: {
+        color: '#6466e3'
+      },
+      modal: {
+        ondismiss:  () => {
+          console.log('dismissed')
+        }
+      }
+    }
+  
+    const successCallback = (paymentid: any) => {
+      console.log(paymentid);
+    }
+  
+    const failureCallback = (e: any) => {
+      console.log(e);
+    }
+
+  
+    Razorpay.open(RozarpayOptions,successCallback, failureCallback)
+  }
+  
+
+}
